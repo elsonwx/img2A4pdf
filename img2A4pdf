@@ -1,0 +1,29 @@
+#!/bin/bash
+if [[ -f $(pwd)/$1 ]];then
+    input_file=$(pwd)/$1
+else
+    input_file=$1
+fi
+img_size=$(identify -format '%w %h' $input_file)
+img_width=$(echo $img_size|cut -d ' ' -f 1)
+img_height=$(echo $img_size|cut -d ' ' -f 2)
+echo "image size:"${img_width}x${img_height}
+page_height=$(($img_width*297/210))
+echo "will cut for target size:"${img_width}x${page_height}
+# math.ceil()
+# divide=8; by=3; (( result=(divide+by-1)/by )); echo $result
+page_nums=$((($img_height + $page_height - 1) / $page_height))
+echo "will cut to "${img_height}/${page_height} = ${page_nums} pages
+file_ext_name=$(basename $input_file)
+filename=${file_ext_name%.*}
+extname=${input_file##*.}
+mkdir ${filename}_for_a4
+cd ${filename}_for_a4
+for i in $(seq $page_nums);do
+    echo "extract the page $i image"
+    convert $input_file -crop ${img_width}x$page_height+0+$((($i-1)*$page_height))  -background white -alpha remove -alpha off ${filename}_${i}.$extname
+done
+# pip3 install img2pdf
+echo "convert all A4 image to pdf"
+img2pdf *.$extname -o $filename.pdf
+echo "success!!! please see the images and pdf file in the result directory"
