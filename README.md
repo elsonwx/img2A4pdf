@@ -22,5 +22,6 @@ convert a long screen image to A4 size pdf
 ### Usage
 
 ```shell
+wget https://git.io/img2A4pdf && chmod +x img2A4pdf
 ./img2A4pdf input.png
 ```
