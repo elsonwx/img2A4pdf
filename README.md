@@ -1,5 +1,15 @@
 # img2A4pdf
-convert a long screen image to A4 size pdf
+convert a long screenshot image to A4 size pdf
+
+
+
+##### how to screen full size page on google chrome
+
+1. Open Chrome DevTools
+2. `Ctrl + Shift + P` if you're on a PC, or `Command + Shift + P` on a Mac
+3. type `capture full size screenshot` then `enter`
+
+
 
 ### Prerequisites
 
@@ -23,5 +33,5 @@ convert a long screen image to A4 size pdf
 
 ```shell
 wget https://git.io/img2A4pdf && chmod +x img2A4pdf
-./img2A4pdf input.png
+./img2A4pdf input_screenshot.png
 ```
