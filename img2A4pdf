@@ -22,6 +22,10 @@ cd ${filename}_for_a4
 for i in $(seq $page_nums);do
     echo "extract the page $i image"
     convert $input_file -crop ${img_width}x$page_height+0+$((($i-1)*$page_height))  -background white -alpha remove -alpha off ${filename}_${i}.$extname
+    page_img_height=$(echo $(identify -format '%w %h' ${filename}_${i}.$extname) | cut -d ' '  -f 2)
+    if [[ $page_img_height -le 3 ]];then
+        rm ${filename}_${i}.$extname
+    fi
 done
 # pip3 install img2pdf
 echo "convert all A4 image to pdf"
